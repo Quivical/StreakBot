@@ -5,20 +5,22 @@ import random
 
 import interactions as ipy
 
-from common.data import write
+from common.data import write, retrieve
 
 import config
+from common.data.models import User
 
 
 class LogExtension(ipy.Extension):
 
     @ipy.slash_command(
         name="log",
-        description="Log that you've completed today's activity",
+        description="Log that you'vae completed today's activity",
         scopes=[config.GUILD_ID]
     )
     async def log_cmd(self, ctx: ipy.InteractionContext):
-        if not await write.add_user_log(self.bot, ctx.author.id):
+        sticker = await retrieve.get_sticker(self.bot)  # (id, name)
+        if not await write.add_user_log(self.bot, ctx.author.id, sticker[0]):
             await ctx.send(
                 "You've already logged activity for today! Come back tomorrow.",
                 ephemeral=config.EPHEMERAL_RESPONSES
@@ -56,6 +58,6 @@ class LogExtension(ipy.Extension):
         await ctx.send(
             f"**{random.choice(well_done_phrases)}!** "
             f"{random.choice(extra_phrases)} "
-            f"Your activity has been logged for today.",
+            f"Your activity has been logged for today and you've earned the {sticker[1]} sticker.",
             ephemeral=config.EPHEMERAL_RESPONSES
         )

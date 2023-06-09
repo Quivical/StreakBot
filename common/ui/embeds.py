@@ -22,6 +22,14 @@ def _last_7_days(user):
     return string[:-len(seperator_string)]
 
 
+def _sticker_collection(user):
+    string = ""
+    stickers = user.get_stickers()
+    for sticker, count in stickers.most_common():
+        string += sticker + f"`x{count}` "
+    return string if string != "" else "*No stickers*"
+
+
 def user_profile(user):
     fields = [
         ipy.EmbedField(
@@ -44,8 +52,8 @@ def user_profile(user):
             value=f"{_last_7_days(user)}"
         ),
         ipy.EmbedField(
-            name="Sticker Collection (X/XX)",
-            value="Work in Progress"
+            name="Sticker Collection",
+            value=f"{_sticker_collection(user)}"
         )
     ]
     return ipy.Embed(

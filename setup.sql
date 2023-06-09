@@ -1,5 +1,13 @@
 CREATE TABLE IF NOT EXISTS user_log (
-    id TEXT,
+    id INTEGER PRIMARY KEY,
+    user_id TEXT,
     date DATE,
-    UNIQUE(id, date)
+    sticker_id INTEGER,
+    UNIQUE(user_id, date)
+);
+
+CREATE TABLE IF NOT EXISTS stickers (
+    id INTEGER PRIMARY KEY,
+    emoji TEXT UNIQUE,
+    rarity INTEGER
 );

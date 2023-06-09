@@ -42,6 +42,7 @@ bot = ipy.Client(
     intents=ipy.Intents.DEFAULT,
     # activity=ipy.Activity.create(name=""), <-- Load from config file
     logger=ipy_logger,
-    auto_defer=True
+    auto_defer=True,
+    disable_dm_commands=True
 )
 

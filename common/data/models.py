@@ -1,3 +1,4 @@
+from collections import Counter
 from datetime import datetime, timedelta
 
 import interactions as ipy
@@ -14,6 +15,7 @@ class User:
     baseuser: ipy.BaseUser
     id: int
     raw_dates: []  # list of dates the user has logged
+    raw_stickers: []  # list of stickers the user has earned
 
     @classmethod
     async def create_from_id(cls, bot, user_id):
@@ -22,7 +24,7 @@ class User:
         """
         self = User()
         self.id = int(user_id)
-        self.raw_dates = await data.get_user_logs(bot, user_id)
+        self.raw_dates, self.raw_stickers = zip(*await data.get_user_logs(bot, user_id))
         return self
 
     @classmethod
@@ -39,14 +41,7 @@ class User:
         """
         Create a list of user objects
         """
-        users = await data.get_all_logs(bot)
-        user_objects = []
-        for user_id, dates in users:
-            self = User()
-            self.id = int(user_id)
-            self.raw_dates = dates
-            user_objects.append(self)
-        return user_objects
+        pass  # TODO: Implement when needed
 
     def get_log_count(self):
         return len(self.raw_dates)
@@ -65,7 +60,7 @@ class User:
 
     def get_longest_streak_count(self):
         streaks = []  # creates a list of each streak (which is a list of dates)
-        dates = self.raw_dates
+        dates = list(self.raw_dates)
         dates.sort()
 
         prev_date = None
@@ -89,6 +84,9 @@ class User:
     def get_first_log(self):
         if len(self.raw_dates) == 0:
             return None
-        dates = self.raw_dates
+        dates = list(self.raw_dates)
         dates.sort(reverse=True)
         return dates[0]
+
+    def get_stickers(self):
+        return Counter(self.raw_stickers)
