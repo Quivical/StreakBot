@@ -8,7 +8,7 @@ from common.ui import emoji
 
 
 def _last_7_days(user):
-    seperator_string = "`---`"
+    seperator_string = "---"
     string = ""
     start = datetime.now(pytz.timezone(config.TIMEZONE)) - timedelta(days=6)
     for day in range(7):
@@ -26,33 +26,29 @@ def _sticker_collection(user):
     string = ""
     stickers = user.get_stickers()
     for sticker, count in stickers.most_common():
-        string += sticker + f"`x{count}` "
-    return string if string != "" else "*No stickers*"
+        string += sticker + f"`x{count}`  "
+    return string[:-2] if string != "" else "*No stickers*"
 
 
 def user_profile(user):
     fields = [
         ipy.EmbedField(
-            name="Current Streak",
-            value=f"{emoji.convert_num_to_emoji(user.get_streak_count())}",
+            name=":fire: Streak:",
+            value=f"{emoji.convert_num_to_emoji(user.get_streak_count())}  "
+                  f"(Longest: **{user.get_longest_streak_count()}**)",
             inline=True
         ),
         ipy.EmbedField(
-            name="Total Days",
-            value=f"{emoji.convert_num_to_emoji(user.get_log_count())}",
+            name=":chart_with_upwards_trend: Total:",
+            value=f"{emoji.convert_num_to_emoji(user.get_log_count())} days logged",
             inline=True
         ),
         ipy.EmbedField(
-            name="Longest Streak",
-            value=f"{emoji.convert_num_to_emoji(user.get_longest_streak_count())}",
-            inline=True
-        ),
-        ipy.EmbedField(
-            name="Last 7 Days",
+            name=":calendar_spiral: Last 7 Days:",
             value=f"{_last_7_days(user)}"
         ),
         ipy.EmbedField(
-            name="Sticker Collection",
+            name=":file_folder: Sticker Collection:",
             value=f"{_sticker_collection(user)}"
         )
     ]
@@ -60,10 +56,5 @@ def user_profile(user):
         author=ipy.EmbedAuthor(name=user.baseuser.tag, icon_url=user.baseuser.avatar_url),
         title=f"User Profile | {user.baseuser.display_name}",
         color=config.EMBED_COLOUR,
-        timestamp=ipy.Timestamp.utcnow(),
-        fields=fields,
-        footer=ipy.EmbedFooter(
-            text="Log your activity daily with /log",
-            icon_url=config.BOT_AVATAR_URL
-        )
+        fields=fields
     )

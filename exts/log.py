@@ -29,35 +29,9 @@ class LogExtension(ipy.Extension):
 
         # Form a unique sentence.
         # Combines a well done phrase, extra phrase and always tells the user their activity is logged.
-        well_done_phrases = (
-            "Well done",
-            "Way to go",
-            "Excellent work",
-            "Great job",
-            "Good work",
-            "Way to go",
-            "Neat",
-            "Bravo",
-            "That’s great",
-            "Good for you",
-            "Good job",
-            "Ace",
-            "Incredible",
-            "You rock"
-        )
-        extra_phrases = (
-            "You nailed it this time.",
-            "You exceeded all expectations.",
-            "Kudos to you for your outstanding performance.",
-            "Nothing can stop you now.",
-            "You should be proud of yourself.",
-            "You deserve a round of applause!",
-            "Keep up the good work.",
-            "You have what it takes to succeed."
-        )
         await ctx.send(
-            f"**{random.choice(well_done_phrases)}!** "
-            f"{random.choice(extra_phrases)} "
+            f"**{random.choice(config.LOG_WELL_DONE_PHRASES)}!** "
+            f"{random.choice(config.LOG_EXTRA_PHRASES)} "
             f"Your activity has been logged for today and you've earned the {sticker[1]} sticker.",
             ephemeral=config.EPHEMERAL_RESPONSES
         )
