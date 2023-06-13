@@ -14,8 +14,8 @@ from common.data.models import User
 class LogExtension(ipy.Extension):
 
     @ipy.slash_command(
-        name="log",
-        description="Log that you'vae completed today's activity",
+        name=config.LOG_COMMAND_NAME,
+        description=config.LOG_COMMAND_DESC,
         scopes=[config.GUILD_ID]
     )
     async def log_cmd(self, ctx: ipy.InteractionContext):
@@ -35,3 +35,8 @@ class LogExtension(ipy.Extension):
             f"Your activity has been logged for today and you've earned the {sticker[1]} sticker.",
             ephemeral=config.EPHEMERAL_RESPONSES
         )
+
+    @ipy.listen(disable_default_listeners=True)
+    async def on_command_error(self, event: ipy.api.events.CommandError):
+        await event.ctx.send("**Something went wrong!** This has been logged.", ephemeral=True)
+        await self.bot.on_command_error(self.bot, event)  # call default error handler

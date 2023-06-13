@@ -1,0 +1,67 @@
+# The following file is an example which works as the default config file.
+# Create a copy named config.py and edit options as suitable.
+
+import logging
+
+from interactions import ActivityType
+
+""" Admin
+    These settings should be altered before you start the bot for the first time
+    -----------------------------
+"""
+TIMEZONE = "Europe/London"  # TD identifier from http://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+GUILD_ID = 0  # This bot is designed to work in only 1 guild.
+
+
+""" Interface
+    Customise the bot's interface and some of what it will respond
+    -----------------------------
+"""
+BOT_ACTIVITY_TYPE = ActivityType.LISTENING  # GAME, STREAMING, LISTENING, WATCHING, COMPETING
+BOT_ACTIVITY = "/log"
+
+EPHEMERAL_RESPONSES = False  # Whether responses to slash cmds should be only be shown to the command author/instigator
+EMBED_COLOUR = 0x826b59  # HEX color that should be used within any embed's sidebar. Note: should start with 0x rather than #
+
+BOT_AVATAR_URL = "https://cdn.discordapp.com/embed/avatars/0.png"  # used within embeds, does not change profile image
+
+LOG_COMMAND_NAME = "log"  # the command to log activity, do not include the / at the start
+LOG_COMMAND_DESC = "Log that you've completed today's activity"  # description, can be customised to activity
+LOG_WELL_DONE_PHRASES = (  # One will be selected at random for the response when the user uses the log command
+    "Well done",
+    "Way to go",
+    "Excellent work",
+    "Great job",
+    "Good work",
+    "Way to go",
+    "Neat",
+    "Bravo",
+    "That’s great",
+    "Good for you",
+    "Good job",
+    "Ace",
+    "Incredible",
+    "You rock"
+)
+LOG_EXTRA_PHRASES = (  # One will be selected at random to be placed after the well done phrase
+    "You nailed it this time.",
+    "You exceeded all expectations.",
+    "Kudos to you for your outstanding performance.",
+    "Nothing can stop you now.",
+    "You should be proud of yourself.",
+    "You deserve a round of applause!",
+    "Keep up the good work.",
+    "You have what it takes to succeed."
+)
+
+
+""" Logging
+    If you're not interested in logs, this default config will suffice.
+    -----------------------------
+"""
+LOG_LOCATION = "./log.log"
+LOG_FORMAT = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s")
+BOT_LOG_LVL_FILE = logging.INFO
+BOT_LOG_LVL_CON = logging.WARNING
+IPY_LOG_LVL_FILE = logging.INFO
+IPY_LOG_LVL_CON = logging.WARNING

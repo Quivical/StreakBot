@@ -40,9 +40,11 @@ ipy_logger.addHandler(log_sh)
 bot = ipy.Client(
     token=os.environ["APP_TOKEN"],
     intents=ipy.Intents.DEFAULT,
-    # activity=ipy.Activity.create(name=""), <-- Load from config file
+    activity=ipy.Activity.create(name=config.BOT_ACTIVITY, type=config.BOT_ACTIVITY_TYPE),
     logger=ipy_logger,
     auto_defer=True,
-    disable_dm_commands=True
+    disable_dm_commands=True,
+    send_command_tracebacks=False,
+    delete_unused_application_cmds=True
 )
 
