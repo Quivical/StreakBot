@@ -5,12 +5,13 @@ import asyncio
 
 import aiosqlite
 
-from common import startup_utils
+from common import startup_utils, utils
 from common.const import bot
 
 
 async def run():
     bot.dbconn = await aiosqlite.connect("db.sqlite")
+    await utils.execute_sql_script_from_file(bot.dbconn, "setup.sql")
     try:
         await bot.astart()
     finally:
