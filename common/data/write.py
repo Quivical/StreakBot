@@ -16,3 +16,14 @@ async def add_user_log(bot, user_id, sticker_id: int) -> bool:
         return False
     await bot.dbconn.commit()
     return True
+
+
+async def add_sticker(bot, sticker: str, rarity: int):
+    try:
+        await bot.dbconn.execute(
+            "INSERT INTO stickers (emoji, rarity) VALUES (?, ?)", (sticker, rarity)
+        )
+    except sqlite3.IntegrityError:
+        return False
+    await bot.dbconn.commit()
+    return True

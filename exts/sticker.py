@@ -6,6 +6,7 @@ import interactions as ipy
 
 import config
 from common import utils
+from common.data import write
 
 
 class StickerExtension(ipy.Extension):
@@ -40,4 +41,8 @@ class StickerExtension(ipy.Extension):
     async def sticker_add_cmd(self, ctx: ipy.InteractionContext, emoji: str, rarity: int = 50):
         if not await utils.check_emoji(emoji, ctx.guild):
             return await ctx.send("The sticker must be a valid emoji!", ephemeral=config.EPHEMERAL_RESPONSES)
-        await ctx.send(f"WIP: {emoji}", ephemeral=config.EPHEMERAL_RESPONSES)
+        if not await write.add_sticker(self.bot, emoji, rarity):
+            return await ctx.send(
+                "The sicker is already in the library of collectables!", ephemeral=config.EPHEMERAL_RESPONSES
+            )
+        await ctx.send(f"Sticker has been added: {emoji} (rarity: {rarity})", ephemeral=config.EPHEMERAL_RESPONSES)

@@ -16,5 +16,5 @@ def convert_num_to_emoji(number):
     numbers = str(number)
     string = ""
     for n in numbers:
-        string += num_emoji[n] + " "
-    return string[:-1]
+        string += num_emoji[n]
+    return string
