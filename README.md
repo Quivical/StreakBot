@@ -2,8 +2,16 @@
 
 <h2>Overview</h2>
 <p>A bot designed to encourage doing a daily activity, such as studying or even washing the dishes.
-The bot allows server members to log that they have completed the activity daily using /log. A user's historical activity can be viewed on their profile using /profile or compared to other users on the leaderboard using /leaderboard.
+The bot allows server members to log that they have completed the activity daily and then view their profile + sticker collection and see their activity in relation to other users on the leaderboard.
 </p>
+
+<h2>Commands</h2>
+<ul>
+  <li><b>/log</b> - Log that you have completed a daily activity.</li>
+    <li><b>/profile</b> - View your or another user's profile which shows how many days they have logged, their streak, and sticker collection.</li>
+    <li><b>/leaderboard</b> - See the leaderboard which shows which users have the highest streak and most days logged.</li>
+<li><b>/sticker add</b> - Add a sticker to the library, which can be collected by using /log (moderator/admin only).</li>
+</ul>
 
 <h2>Deployment</h2>
 <p>There is no hosted solution for this bot and you must host it yourself. Note that the bot is only designed for to work in one guild/server. While multiple is possible, data will be shared amongst each. To deploy the bot, please see the instructions below:</p>
