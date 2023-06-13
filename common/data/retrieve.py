@@ -29,10 +29,8 @@ async def get_all_logs(bot) -> dict:
     ) as cursor:
         async for row in cursor:
             datas.append(row)
-    print(datas)
     for user_id, date, emoji in datas:
         logs.setdefault(user_id, []).append((date, emoji))
-    print(logs)
     return logs
 
 

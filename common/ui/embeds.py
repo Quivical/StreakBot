@@ -58,3 +58,50 @@ def user_profile(user):
         color=config.EMBED_COLOUR,
         fields=fields
     )
+
+
+def leaderboard(users):
+
+    def get_board(streak_board: bool, func):
+        users.sort(key=func, reverse=True)
+        board_content = [
+            f"`{i}.` <@{u.id}> - **{func(u)}**"
+            for i, u in enumerate(users, start=1)
+            if func(u) > 0
+        ]
+        if len(board_content) <= 0:
+            board_content = ["*Leaderboard is empty!*"]
+        return ipy.EmbedField(
+            name=":fire: Highest Streaks" if streak_board else ":calendar_spiral: Highest Logs",
+            value='\n'.join(board_content[:10]),  # only show top 10
+            inline=True
+        )
+
+    total_streaks = sum([user.get_streak_count() for user in users])
+    total_days = sum([user.get_log_count() for user in users])
+
+    fields = [
+        ipy.EmbedField(
+            name=":busts_in_silhouette: Total Users",
+            value=f"**{emoji.convert_num_to_emoji(len(users))}** user{'s' if len(users) != 1 else ''}",
+            inline=True
+        ),
+        ipy.EmbedField(
+            name=":fire: Total Streaks",
+            value=f"**{emoji.convert_num_to_emoji(total_streaks)}** day{'s' if total_streaks != 1 else ''}",
+            inline=True
+        ),
+        ipy.EmbedField(
+            name=":calendar_spiral: Total Days",
+            value=f"**{emoji.convert_num_to_emoji(total_days)}** day{'s' if total_days != 1 else ''}",
+            inline=True
+        ),
+        get_board(True, lambda u: u.get_streak_count()),
+        get_board(False, lambda u: u.get_log_count())
+    ]
+
+    return ipy.Embed(
+        title=f":trophy: Server Leaderboard",
+        color=config.EMBED_COLOUR,
+        fields=fields
+    )

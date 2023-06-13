@@ -37,11 +37,20 @@ class User:
         return self
 
     @classmethod
-    async def create_list(cls, bot):
+    async def create_list(cls, bot) -> list:
         """
         Create a list of user objects
         """
-        pass  # TODO: Implement when needed
+        users = []
+        users_data = await data.get_all_logs(bot)
+        for user_id, user_data in users_data.items():
+            self = User()
+            self.id = user_id
+            dates, stickers = zip(*user_data)
+            self.raw_dates = dates
+            self.raw_stickers = stickers
+            users.append(self)
+        return users
 
     def get_log_count(self):
         return len(self.raw_dates)
