@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS stickers (
     rarity INTEGER
 );
 
-
 CREATE TABLE IF NOT EXISTS user_preferences (
     user_id TEXT PRIMARY KEY,
     reminder_time TEXT,
