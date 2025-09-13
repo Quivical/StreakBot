@@ -1,4 +1,5 @@
 import random
+import datetime
 
 
 async def get_user_logs(bot, user_id) -> list:
@@ -55,3 +56,44 @@ async def get_sticker(bot) -> tuple:
     sticker_chance = random.choices(emojis, rarities, k=sum(rarities))
     sticker = random.choice(sticker_chance)
     return reference[sticker], sticker
+
+
+async def get_all_users(bot) -> list:
+    """
+    Get a list of all users in the database.
+    """
+    users = []
+    async with bot.dbconn.execute("SELECT DISTINCT user_id FROM user_log") as cursor:
+        async for row in cursor:
+            users.append(row[0])
+    return users
+
+async def get_users_without_todays_log(bot) -> list:
+    """
+    Get a list of users who have not logged today.
+    """
+    users_without_log = []
+    all_users = await get_all_users(bot)
+    today = datetime.date.today()
+    async with bot.dbconn.execute("SELECT DISTINCT user_id FROM user_log WHERE date = ?", (today,)) as cursor:
+        users_with_log = [row[0] async for row in cursor]
+    
+    for user_id in all_users:
+        if user_id not in users_with_log:
+            users_without_log.append(user_id)
+            
+    return users_without_log
+
+async def get_users_to_remind(bot) -> list:
+    """
+    Get a list of users who need to be reminded at the current time.
+    """
+    now_utc = datetime.datetime.utcnow().strftime("%H:%M")
+    users_to_remind = []
+    async with bot.dbconn.execute(
+        "SELECT user_id FROM user_preferences WHERE reminder_time = ? AND reminders_enabled = ?",
+        (now_utc, True)
+    ) as cursor:
+        async for row in cursor:
+            users_to_remind.append(row[0])
+    return users_to_remind

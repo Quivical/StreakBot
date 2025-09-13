@@ -27,3 +27,19 @@ async def add_sticker(bot, sticker: str, rarity: int):
         return False
     await bot.dbconn.commit()
     return True
+
+async def set_reminder_time(bot, user_id, reminder_time):
+    await bot.dbconn.execute(
+        "INSERT INTO user_preferences (user_id, reminder_time, reminders_enabled) VALUES (?, ?, ?) "
+        "ON CONFLICT(user_id) DO UPDATE SET reminder_time = ?, reminders_enabled = ?",
+        (str(user_id), reminder_time, True, reminder_time, True)
+    )
+    await bot.dbconn.commit()
+
+async def disable_reminders(bot, user_id):
+    await bot.dbconn.execute(
+        "INSERT INTO user_preferences (user_id, reminders_enabled) VALUES (?, ?) "
+        "ON CONFLICT(user_id) DO UPDATE SET reminders_enabled = ?",
+        (str(user_id), False, False)
+    )
+    await bot.dbconn.commit()

@@ -11,3 +11,10 @@ CREATE TABLE IF NOT EXISTS stickers (
     emoji TEXT UNIQUE,
     rarity INTEGER
 );
+
+
+CREATE TABLE IF NOT EXISTS user_preferences (
+    user_id TEXT PRIMARY KEY,
+    reminder_time TEXT,
+    reminders_enabled BOOLEAN DEFAULT TRUE
+);
