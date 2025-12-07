@@ -9,7 +9,7 @@ from interactions import ActivityType
     These settings should be altered before you start the bot for the first time
     -----------------------------
 """
-TIMEZONE = "Europe/London"  # TD identifier from http://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+TIMEZONE = "America/Anchorage"  # TD identifier from http://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 GUILD_ID = 0  # This bot is designed to work in only 1 guild.
 
 
@@ -52,9 +52,18 @@ LOG_EXTRA_PHRASES = (  # One will be selected at random to be placed after the w
     "You deserve a round of applause!",
     "Keep up the good work.",
     "You have what it takes to succeed."
-)
-
-
+    )
+    LOG_EARLY_PHRASES = (
+        "Early bird gets the worm!",
+        "Up with the sun!",
+    )
+    LOG_LATE_PHRASES = (
+        "Burning the midnight oil!",
+        "Better late than never!",
+        "Just in time!",
+    )
+    
+    
 """ Logging
     If you're not interested in logs, this default config will suffice.
     -----------------------------

@@ -1,5 +1,7 @@
 <h1>Acitivty Logger Discord Bot</h1>
 
+<p><i>This project is a fork of <a href="https://github.com/SamNuttall/Activity-Log-Bot">Activity-Log-Bot</a>.</i></p>
+
 <h2>Overview</h2>
 <p>A bot designed to encourage doing a daily activity, such as studying or even washing the dishes.
 The bot allows server members to log that they have completed the activity daily and then view their profile + sticker collection and see their activity in relation to other users on the leaderboard.
@@ -27,11 +29,12 @@ The bot allows server members to log that they have completed the activity daily
 <h5>In A Docker Container</h5>
 <ol>
   <li>Download and install docker desktop on your development envirement.</li>
-  <li>From within the working directory, run <code>docker build -t [your_chosen_title_here] .</code></li>
+  <li>From within the working directory, run <code>docker build -t [your_chosen_title_here] .</code> - note the period at the end of that command.</li>
   <li>Give the generated image a tag with <code>docker tag</code>.</li>
-  <li>Push the code to a docker registry with <code>docker push</code>></li>
+  <li>Push the code to a docker registry with <code>docker push</code>.</li>
   <li>With the docker daemon installed on your server, use <code>docker pull</code> to get the image.</li>
   <li>Finally, use <code>docker run</code> to start the bot. You may consider mounting a volume such that user data persists if you restart the bot, using flags like <code>-v ./db.sqlite:/app/db.sqlite</code>></li>
+  <li><b>WARNING: This Docker build process hardcodes your bot's API key directly into the image. This is a significant security risk, as a publicly accessible image could expose your API key to unauthorized users. It is highly recommended to use a private Docker image for deployment. Additionally, always ensure your bot's API key is configured with the absolute minimum required permissions to mitigate potential abuse.</b></li>
 </ol>
 
 <p>Support for the bot is avaliable, but not guaranteed, via Discord (username: quivical) or by creating a GitHub issue. </p>
