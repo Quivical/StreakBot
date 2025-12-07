@@ -6,7 +6,7 @@ import asyncio
 import aiosqlite
 
 from common import startup_utils, utils
-from common.const import bot
+from common.const import bot, logger
 
 
 async def run():
@@ -15,6 +15,7 @@ async def run():
     try:
         await bot.astart()
     finally:
+        logger.info("Bot is shutting down.")
         await bot.dbconn.close()
 
 
