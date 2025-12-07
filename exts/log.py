@@ -37,7 +37,7 @@ class LogExtension(ipy.Extension):
 
         if now.hour < 4:  # Early: Midnight to 4AM
             extra_phrases.extend(config.LOG_EARLY_PHRASES)
-        elif now.hour >= 22:  # Late: 8PM to Midnight
+        elif now.hour >= 22:  # Late: 10PM to Midnight
             extra_phrases.extend(config.LOG_LATE_PHRASES)
 
         # Form a unique sentence.
